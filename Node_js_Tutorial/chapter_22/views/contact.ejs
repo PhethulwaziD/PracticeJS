@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/styles/styles.css">
+	<title></title>
+</head>
+<body>
+	<h1>Contact Phethulwazi</h1>
+	<p>For more info</p>
+	<p><%=request.person%>: <%= request.dept%></p>
+	<form id="contact-form" method="POST" action="/contact">
+		<label for="who">Cantact</label>
+		<input type="text" name="who" value="<%=request.person%>">
+		<label for="dept">Department</label>
+		<input type="text" name="dept" value="<%= request.dept%>">
+		<input type="submit" name="submit">
+	</form>
+</body>
+</html>

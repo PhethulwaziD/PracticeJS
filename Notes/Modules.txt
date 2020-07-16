@@ -1,0 +1,38 @@
+Node Modules
+
+What is a node js Module
+Modules -> file or directory in the *node_modules directory that can be loaded by the Node.js require() function (a piece of reusabel code)
+*node modules directory a direcory of node Modules
+
+Three kinds of Modules
+->Core modules
+->Third party modules
+->local modules
+
+require() function
+looks for a module in the following places
+->Core modules
+->File of path(local module)
+-> node modules folder
+-> NODE_PATH (global path)
+require moment
+
+Module Patterns
+Exports a namspace (local)
+Exports d Function
+Exports High Order Function
+Exports a Constructor
+Exports a Singleton
+Extends a global
+applies a monkey patch
+
+PACKAGES
+A container of node modules
+packages is version
+defines dependencies
+published online
+> A package is defined by the presence of package.jason file
+to create a package.json
+>npm init (
+-y)
+

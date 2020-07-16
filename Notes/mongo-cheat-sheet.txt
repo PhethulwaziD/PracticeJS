@@ -1,0 +1,205 @@
+
+mongo-> run mongodb
+
+show dbs -> show databases
+
+use (db_name) -> selects the database you want to use. if the database does not exist, use create the database
+
+show collections -> shows all the (tables) a database contains
+
+db.dropDatabase() -> Delete a database currently in use.
+
+db -> checkes which database is currently in use
+
+db.createCollection(collectionName) -> creates a collection(table);
+
+show collections -> shows collection(tables);
+
+db.collectionName.insert({data}) -> inserts data into the collection
+i.e
+db.Users.insert({
+	firstName: 'Phethulwazi',
+	lastName: 'Donga',
+	email: 'pdonga@gmail.com',
+	sex: 'M',
+	contact: '081 208 1389',
+	date: Date()
+})
+
+db.Users.insertMany() -> inserts more than one data element into the array
+
+i.e
+
+db.Users.insertMany([
+{
+	firstName: 'Andile',
+	lastName: 'Donga',
+	email: 'adonga@gmail.com',
+	sex: 'M',
+	contact: '082 208 1389',
+	date: Date()
+},
+{
+	firstName: 'Ntando',
+	lastName: 'Donga',
+	email: 'ndonga@gmail.com',
+	sex: 'M',
+	contact: '083 208 1389',
+	date: Date()
+},
+{
+	firstName: 'Chunkie',
+	lastName: 'Nadaba',
+	email: 'cndaba@gmail.com',
+	sex: 'F',
+	contact: '084 208 1389',
+	date: Date()
+},
+{
+	firstName: 'Ntombi',
+	lastName: 'Ndaba',
+	email: 'nndaba@gmail.com',
+	sex: 'F',
+	contact: '085 208 1389',
+	date: Date()
+},
+{
+	firstName: 'Silindile',
+	lastName: 'Donga',
+	email: 'sdonga@gmail.com',
+	sex: 'F',
+	contact: '072 208 1389',
+	date: Date()
+}
+])
+              find({})
+db.dbName.find({}) -> Queries collection from database in use and reaturns documents from collection
+
+i.e db.Users.find({}).pretty()
+#adding pretty make documents alot more readable
+
+#You can also filter documents by conditionalising find({});
+
+i.e
+db.Users.find({sex : 'F'}).pretty()
+
+#Adding sort() will sort accordin to the sort condition
+i.e
+db.Users.find({sex : 'F'}).sort({first: 1}).pretty()
+
+* 1 or -1 will sort data in ascending and descending order repsectively
+
+#appending count() will give ypu the number of documents with the specified condition if any
+
+i.e 
+db.Users.find({sex : 'F'}).count()
+
+appending limit() will limit the numbers of documents found to the value specified
+db.Users.find({sex : 'F'}).limit(1).pretty()
+
+#forEach() -> traverses docs
+
+i.e 
+db.Users.find().forEach( doc => {
+	print('First Name: '+ doc.firstName)
+})
+
+#findOne(condition) -> limits the number of documents found to one 
+
+UPDATE DATA
+
+db.Users.update({specift doc}, {new data}, { upsert: true}) -> replaces all the data of the specified doc with new data
+
+i.e
+
+db.Users.update(
+{firstName: 'Chunkie'}, 
+{
+	firstName: '',
+	lastName: 'Ndaba',
+	email: 'cndaba@gmail.com',
+	sex: 'F',
+	contact: '084 208 1389',
+	date: Date()
+},
+{
+	upsert: true
+})
+*Note upsert will add the doc with the new data if the specified doc is not found
+
+UPDATE FIELD DATA
+#db.Users.update({doc. specifier}, { $set: { field: data}})-> Updates specific field data
+
+db.Users.update(
+{firstName: 'Silindile'},
+{
+	$set: {
+		contact: '072 489 0401'
+	}
+})
+Note if the field does not exist it will be added
+	
+add a likes field
+db.Users.update(
+{firstName: 'Chunkie'},
+{
+	$inc: {likes: 1}
+})
+
+INCREMENT FIELD DATA
+#db.Users.update({doc. specifier}, { $inc: { like: value}}) -> increments the value of the specified field doc specified
+
+RENAME FIELD NAME
+db.Users.update(
+{firstName: 'Chunkie'},
+{
+	$rename : {
+		firstName: Name
+	}
+}) 
+
+DELETING DOCUMETS
+db.Users.remove({doc.specifier}) -> deletes the documents specified
+
+db.Users.remove({lastName : 'Nadaba'})
+
+INSERTING DOCUMENTS IN DOCUMENTS
+db.Users.update(
+{firstName: 'Phethulwazi'},
+{
+	$set : {
+		comments: [
+			{
+				User: 'Chunkie',
+				comment: 'I love you',
+				date: Date()
+			},
+			{
+				User: 'Phehtulwazi',
+				comment: 'I love you too',
+				date: Date()
+			}
+		]
+	}
+})
+
+elemMacth -> find element with what is specified as match
+
+i.e 
+db.Users.find({
+	comments: {
+		$elemMatch: {
+			user: 'Chunkie'
+		}
+	}
+})
+CREATE INDEX
+db.Users.createIndex({firstName: 'text'})
+TEXT SEARCH
+db.Users.find({
+	$text: {
+		$search:"\"Users 0\"" 
+	}
+})
+* I do not understand fully yet
+
